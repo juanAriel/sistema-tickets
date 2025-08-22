@@ -17,7 +17,7 @@ class Ticket extends Model
     ];
 
     protected $casts = [
-        'attending_in' => 'datatime',
+        'attending_in' => 'datetime',
     ];
 
     public function scopeType($q, string $type)

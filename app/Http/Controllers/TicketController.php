@@ -49,33 +49,42 @@ class TicketController extends Controller
     {
         abort_unless(in_array($type, ['cajero', 'cliente']), 404);
 
-        $actual = Ticket::type($type)->attending()->orderByDesc('updated_at')->first();
-        $cola = Ticket::type($type)->wait()->orderBy('id')->limit(5)->get();
+        $actualCajero = Ticket::type('cajero')->attending()->first();
+$actualCliente = Ticket::type('cliente')->attending()->first();
 
-        return view('panel.index', compact('type', 'actual', 'cola'));
+$ticketsCajero = Ticket::type('cajero')->orderBy('id')->get();
+$ticketsCliente = Ticket::type('cliente')->orderBy('id')->get();
+
+return view('panel.index', compact('actualCajero','actualCliente','ticketsCajero','ticketsCliente'));
+
     }
 
     // Avanzar al siguiente: cierra el actual (si hay) y toma el siguiente en espera
-    public function nextTicket(string $type)
-    {
-        abort_unless(in_array($type, ['cajero', 'cliente']), 404);
+    public function nextTicket(Request $request, string $type, $ticketId = null)
+{
+    // ✅ Caso 1: finalizar ticket existente
+    if ($ticketId) {
+        $ticket = Ticket::findOrFail($ticketId);
+        $ticket->status = 'served';
+        $ticket->attending_in = null;
+        $ticket->save();
 
-
-        DB::transaction(function () use ($type) {
-            $actual = Ticket::type($type)->attending()->orderByDesc('updated_at')->first();
-            if ($actual) {
-                $actual->update(['status' => 'attending', 'attending_in' => now()]);
-            }
-
-            $next = Ticket::type($type)->wait()->orderBy('id')->lockForUpdate()->first();
-            if ($next) {
-                $next->update(['status' => 'attending']);
-            }
-        });
-
-
-        return back();
+        return back()->with('success', "El ticket {$ticket->number_ticket} fue finalizado.");
     }
+
+    // ✅ Caso 2: llamar al siguiente ticket en espera
+    $next = Ticket::type($type)->inWait()->orderBy('id')->first();
+    if ($next) {
+        $next->status = 'attending';
+        $next->attending_in = now();
+        $next->save();
+
+        return back()->with('success', "Ahora atendiendo el ticket {$next->number_ticket}.");
+    }
+
+    return back()->with('warning', "No hay tickets en espera para {$type}.");
+}
+
 
 
     // Monitor (pantalla pública)
