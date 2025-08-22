@@ -2,10 +2,9 @@
 
 @section('title', 'Generar ficha')
 
-
 @section('content')
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <form method="POST" action="{{ route('tickets.generate') }}" class="bg-white p-4 rounded-xl shadow">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+        <form method="POST" action="{{ route('tickets.generate') }}" class="bg-white p-4 rounded-xl shadow justify-items-center">
             @csrf
             <input type="hidden" name="type" value="cajero">
             <h2 class="text-lg font-semibold mb-2">Ficha para Cajero</h2>
@@ -13,7 +12,7 @@
         </form>
 
 
-        <form method="POST" action="{{ route('tickets.generate') }}" class="bg-white p-4 rounded-xl shadow">
+        <form method="POST" action="{{ route('tickets.generate') }}" class="bg-white p-4 rounded-xl shadow justify-items-center">
             @csrf
             <input type="hidden" name="type" value="cliente">
             <h2 class="text-lg font-semibold mb-2">Ficha para Atención</h2>
