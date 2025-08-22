@@ -16,4 +16,4 @@ Route::post('/panel/{type}/next/{ticket?}', [TicketController::class, 'nextTicke
 
 
 Route::get('/monitor/{type}', [TicketController::class, 'monitor'])->name('monitor');
-Route::get('/status/{type}', [TicketController::class, 'status'])->name('status');
+Route::get('/status/{type}', [TicketController::class, 'statusTicket'])->name('status');

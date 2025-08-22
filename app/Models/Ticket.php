@@ -32,4 +32,8 @@ class Ticket extends Model
     {
         return $q->where('status', 'attending');
     }
+    public function scopeServed($q)
+    {
+        return $q->where('status', 'served');
+    }
 }

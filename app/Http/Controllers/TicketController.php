@@ -19,17 +19,17 @@ class TicketController extends Controller
         $data = $request->validate([
             'type' => 'required|in:cajero,cliente',
         ]);
-        
+
         $ticket = DB::transaction(function () use ($data) {
             $counter = Counter::where('type', $data['type'])
-            ->lockForUpdate()
-            ->firstOrFail();
-            
-            
+                ->lockForUpdate()
+                ->firstOrFail();
+
+
             $next = $counter->last_number + 1;
             $counter->last_number = $next;
             $counter->save();
-            
+
 
             return Ticket::create([
                 'type' => $data['type'],
@@ -37,7 +37,7 @@ class TicketController extends Controller
                 'status' => 'wait',
             ]);
         });
-        
+
         // dd('test');
         return view('tickets.ticket')->with(
             ['ticket' => $ticket]
@@ -50,40 +50,39 @@ class TicketController extends Controller
         abort_unless(in_array($type, ['cajero', 'cliente']), 404);
 
         $actualCajero = Ticket::type('cajero')->attending()->first();
-$actualCliente = Ticket::type('cliente')->attending()->first();
+        $actualCliente = Ticket::type('cliente')->attending()->first();
 
-$ticketsCajero = Ticket::type('cajero')->orderBy('id')->get();
-$ticketsCliente = Ticket::type('cliente')->orderBy('id')->get();
+        $ticketsCajero = Ticket::type('cajero')->orderBy('id')->get();
+        $ticketsCliente = Ticket::type('cliente')->orderBy('id')->get();
 
-return view('panel.index', compact('actualCajero','actualCliente','ticketsCajero','ticketsCliente'));
-
+        return view('panel.index', compact('actualCajero', 'actualCliente', 'ticketsCajero', 'ticketsCliente'));
     }
 
     // Avanzar al siguiente: cierra el actual (si hay) y toma el siguiente en espera
     public function nextTicket(Request $request, string $type, $ticketId = null)
-{
-    // ✅ Caso 1: finalizar ticket existente
-    if ($ticketId) {
-        $ticket = Ticket::findOrFail($ticketId);
-        $ticket->status = 'served';
-        $ticket->attending_in = null;
-        $ticket->save();
+    {
+        // ✅ Caso 1: finalizar ticket existente
+        if ($ticketId) {
+            $ticket = Ticket::findOrFail($ticketId);
+            $ticket->status = 'served';
+            $ticket->attending_in = null;
+            $ticket->save();
 
-        return back()->with('success', "El ticket {$ticket->number_ticket} fue finalizado.");
+            return back()->with('success', "El ticket {$ticket->number_ticket} fue finalizado.");
+        }
+
+        // ✅ Caso 2: llamar al siguiente ticket en espera
+        $next = Ticket::type($type)->inWait()->orderBy('id')->first();
+        if ($next) {
+            $next->status = 'attending';
+            $next->attending_in = now();
+            $next->save();
+
+            return back()->with('success', "Ahora atendiendo el ticket {$next->number_ticket}.");
+        }
+
+        return back()->with('warning', "No hay tickets en espera para {$type}.");
     }
-
-    // ✅ Caso 2: llamar al siguiente ticket en espera
-    $next = Ticket::type($type)->inWait()->orderBy('id')->first();
-    if ($next) {
-        $next->status = 'attending';
-        $next->attending_in = now();
-        $next->save();
-
-        return back()->with('success', "Ahora atendiendo el ticket {$next->number_ticket}.");
-    }
-
-    return back()->with('warning', "No hay tickets en espera para {$type}.");
-}
 
 
 
@@ -100,14 +99,18 @@ return view('panel.index', compact('actualCajero','actualCliente','ticketsCajero
     {
         abort_unless(in_array($type, ['cajero', 'cliente']), 404);
 
-
         $actual = Ticket::type($type)->attending()->orderByDesc('updated_at')->first();
-        $cola = Ticket::type($type)->wait()->orderBy('id')->limit(5)->get(['number_ticket']);
 
+        $ultimos = Ticket::type($type)
+            ->served()
+            ->orderByDesc('updated_at')
+            ->limit(5)
+            ->get(['number_ticket']);
 
         return response()->json([
             'actual' => $actual ? $actual->number_ticket : null,
-            'cola' => $cola->pluck('number_ticket'),
+            'ultimos' => $ultimos->pluck('number_ticket')
+                ->when($actual, fn($c) => $c->push($actual->number_ticket)), // agregamos el actual al final
         ]);
     }
 }
