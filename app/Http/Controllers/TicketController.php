@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Counter;
 use App\Models\Ticket;
+use App\Services\TicketService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    protected TicketService $ticketService;
+    public function __construct(TicketService $ticketService)
+    {
+        $this->ticketService = $ticketService;
+    }
     public function formTicket()
     {
         return view('tickets.create');
@@ -55,11 +61,24 @@ class TicketController extends Controller
         $ticketsCajero = Ticket::type('cajero')->orderBy('id')->get();
         $ticketsCliente = Ticket::type('cliente')->orderBy('id')->get();
 
-        return view('panel.index', compact('actualCajero', 'actualCliente', 'ticketsCajero', 'ticketsCliente'));
+        if ($type == 'cliente') {
+            $statusBtn = $this->ticketService->statusBtn($ticketsCliente);
+        } else {
+            $statusBtn = $this->ticketService->statusBtn($ticketsCajero);
+        }
+
+        return view('panel.index', compact(
+            'actualCajero',
+            'actualCliente',
+            'ticketsCajero',
+            'ticketsCliente',
+            'type',
+            'statusBtn'
+        ));
     }
 
     // Avanzar al siguiente: cierra el actual (si hay) y toma el siguiente en espera
-    public function nextTicket(Request $request, string $type, $ticketId = null)
+    public function nextTicket(string $type, $ticketId = null)
     {
         // ✅ Caso 1: finalizar ticket existente
         if ($ticketId) {
