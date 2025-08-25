@@ -20,13 +20,7 @@
             </div>
         </div>
 
-        {{-- Últimos atendidos --}}
-
-
-
-
     </div>
-
     <script>
         async function fetchStatus() {
             try {
@@ -40,7 +34,7 @@
                     data.ultimos.forEach((num, idx) => {
                         const card = document.createElement("div");
                         card.className =
-                            "flex flex-col rounded-lg bg-slate-800 shadow-sm max-w-96 p-8 my-6 border border-slate-600";
+                            "flex flex-col rounded-lg bg-[#4da768] shadow-sm max-w-96 p-8 my-6 border border-slate-600";
                         card.innerHTML = `
                 <div class="pb-8 m-0 mb-8 text-center text-slate-100 border-b border-slate-600">
                     <p class="text-sm uppercase font-semibold text-slate-300 mb-2">
