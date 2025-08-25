@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-900 text-white">
+<body class="bg-gray-100 ">
     <div class="container mx-auto py-10">
         <h1 class="text-4xl font-bold text-center mb-8">📺 Monitor de {{ ucfirst($type) }}</h1>
 
@@ -27,6 +27,7 @@
                 const res = await fetch("{{ route('status', $type) }}");
                 const data = await res.json();
 
+                console.log(data);
                 // Últimos atendidos + actual
                 const ultimosEl = document.getElementById("ultimos");
                 ultimosEl.innerHTML = "";
@@ -34,11 +35,11 @@
                     data.ultimos.forEach((num, idx) => {
                         const card = document.createElement("div");
                         card.className =
-                            "flex flex-col rounded-lg bg-[#4da768] shadow-sm max-w-96 p-8 my-6 border border-slate-600";
+                            `flex flex-col rounded-lg ${(idx === 0 && data.actual != null ) ? "bg-[#4da768]" : "bg-[#4e9fe5]" }  shadow-sm max-w-96 p-8 my-6 border border-slate-600`;
                         card.innerHTML = `
                 <div class="pb-8 m-0 mb-8 text-center text-slate-100 border-b border-slate-600">
                     <p class="text-sm uppercase font-semibold text-slate-300 mb-2">
-                        ${idx === data.ultimos.length - 1 ? "👉 En atención" : "✅ Atendido"}
+                        ${idx === 0 && data.actual ? "  👉 En atención" : "✅ Atendido"}
                         </p>
                         <h1 class="text-4xl font-bold text-white">${num}</h1>
                         </div> 

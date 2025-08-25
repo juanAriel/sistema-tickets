@@ -120,16 +120,20 @@ class TicketController extends Controller
 
         $actual = Ticket::type($type)->attending()->orderByDesc('updated_at')->first();
 
+        // dd(empty($actual));
+
         $ultimos = Ticket::type($type)
             ->served()
-            ->orderByDesc('updated_at')
-            ->limit(5)
+            ->orderBy('updated_at', 'desc')
+            ->limit(empty($actual) ? 6 : 5)
             ->get(['number_ticket']);
+
+            // dd($ultimos);
 
         return response()->json([
             'actual' => $actual ? $actual->number_ticket : null,
             'ultimos' => $ultimos->pluck('number_ticket')
-                ->when($actual, fn($c) => $c->push($actual->number_ticket)), // agregamos el actual al final
+                ->when($actual, fn($c) => $c->prepend($actual->number_ticket)), // agregamos el actual al final
         ]);
     }
 }
