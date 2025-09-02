@@ -31,6 +31,7 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # Instala dependencias y configura Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
+    && cp .env.example .env \
     && php artisan key:generate \
     && touch database/database.sqlite \
     && php artisan migrate --force \
