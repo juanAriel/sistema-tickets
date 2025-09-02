@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
 # Habilita mod_rewrite para Laravel
 RUN a2enmod rewrite
 
+# Copia configuración personalizada de Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
 # Instala Composer desde imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
