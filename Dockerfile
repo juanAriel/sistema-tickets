@@ -1,38 +1,43 @@
-FROM php:8.2-apache
+# Usa PHP 8.3 con Apache
+FROM php:8.3-apache
 
-# Instala dependencias del sistema
+# Instala extensiones necesarias
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
     libzip-dev \
+    zip \
+    unzip \
+    git \
+    sqlite3 \
+    libsqlite3-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    sqlite3 \
     && docker-php-ext-install pdo pdo_sqlite zip
 
-# Instala Composer
+# Habilita mod_rewrite para Laravel
+RUN a2enmod rewrite
+
+# Instala Composer desde imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copia archivos del proyecto
-COPY . /var/www/html
-
-# Define directorio de trabajo
+# Establece el directorio de trabajo
 WORKDIR /var/www/html
 
-# Configura Apache para Laravel
-RUN chown -R www-data:www-data /var/www/html \
-    && a2enmod rewrite \
-    && service apache2 restart
+# Copia todos los archivos del proyecto Laravel
+COPY . .
 
-# Instala dependencias PHP
-RUN composer install --no-interaction --optimize-autoloader \
+# Da permisos adecuados
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Instala dependencias y configura Laravel
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && php artisan key:generate \
     && touch database/database.sqlite \
-    && php artisan migrate --force
+    && php artisan migrate --force \
+    && php artisan db:seed --force
 
-# Expone el puerto 80
+# Expone el puerto 80 (Apache)
 EXPOSE 80
 
-# Comando para iniciar Apache
+# Inicia Apache en primer plano
 CMD ["apache2-foreground"]
