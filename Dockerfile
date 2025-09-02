@@ -32,11 +32,17 @@ COPY . .
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+# Establecer permisos adecuados a carpetas críticas
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+
 # Instala dependencias y configura Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && cp .env.example .env \
     && php artisan key:generate \
     && touch database/database.sqlite \
+    && chown www-data:www-data database/database.sqlite \
     && php artisan migrate --force \
     && php artisan db:seed --force
 
