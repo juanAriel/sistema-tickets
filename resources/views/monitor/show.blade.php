@@ -58,7 +58,7 @@
 
         // Ejecutar al inicio y luego cada 5s
         fetchStatus();
-        setInterval(fetchStatus, 5000);
+        // setInterval(fetchStatus, 5000);
     </script>
 </body>
 
