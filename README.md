@@ -21,56 +21,56 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## 🎟️ Vista Previa del Sistema de Tickets
+## 🎟️ Ticket System Preview
 
-A continuación se muestran algunas de las pantallas principales del sistema, junto con sus URLs de acceso.
+Below are some of the main screens of the system, along with their access URLs.
 
-### 🏠 Página Principal
+### 🏠 Main Page
 
 **URL:** [https://sistema-tickets-demo.onrender.com/](https://sistema-tickets-demo.onrender.com/)
 
 <p align="center">
-  <img src="./images/inicio.jpg" width="700" alt="Página de Inicio">
+  <img src="./images/inicio.jpg" width="700" alt="Main page">
 </p>
 
 ---
 
-### 👤 Monitor de Cliente
+### 👤 Client Monitor
 
 **URL:** [https://sistema-tickets-demo.onrender.com/monitor/cliente](https://sistema-tickets-demo.onrender.com/monitor/cliente)
 
 <p align="center">
-  <img src="./images/monitor-cliente.jpg" width="700" alt="Monitor de Cliente">
+  <img src="./images/monitor-cliente.jpg" width="700" alt="Client Monitor">
 </p>
 
 ---
 
-### 🧾 Monitor de Cajero
+### 🧾 Cashier Monitor
 
 **URL:** [https://sistema-tickets-demo.onrender.com/monitor/cajero](https://sistema-tickets-demo.onrender.com/monitor/cajero)
 
 <p align="center">
-  <img src="./images/monitor-cajero.jpg" width="700" alt="Monitor de Cajero">
+  <img src="./images/monitor-cajero.jpg" width="700" alt="Cashier Monitor">
 </p>
 
 ---
 
-### 💼 Panel del Cajero
+### 💼 Cashier Panel
 
 **URL:** [https://sistema-tickets-demo.onrender.com/panel/cajero](https://sistema-tickets-demo.onrender.com/panel/cajero)
 
 <p align="center">
-  <img src="./images/panel-cajero.jpg" width="700" alt="Panel del Cajero">
+  <img src="./images/panel-cajero.jpg" width="700" alt="Cashier Panel">
 </p>
 
 ---
 
-### 🙋 Panel del Cliente
+### 🙋 Client Dashboard
 
 **URL:** [https://sistema-tickets-demo.onrender.com/panel/cliente](https://sistema-tickets-demo.onrender.com/panel/cliente)
 
 <p align="center">
-  <img src="./images/panel-cliente.jpg" width="700" alt="Panel del Cliente">
+  <img src="./images/panel-cliente.jpg" width="700" alt="Client Dashboard">
 </p>
 
 ## License
