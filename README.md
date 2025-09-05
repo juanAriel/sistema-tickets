@@ -11,50 +11,67 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## 🎟️ Vista Previa del Sistema de Tickets
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A continuación se muestran algunas de las pantallas principales del sistema, junto con sus URLs de acceso.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🏠 Página Principal
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**URL:** [https://sistema-tickets-demo.onrender.com/](https://sistema-tickets-demo.onrender.com/)
 
-## Laravel Sponsors
+<p align="center">
+  <img src="./images/inicio.jpg" width="700" alt="Página de Inicio">
+</p>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 👤 Monitor de Cliente
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**URL:** [https://sistema-tickets-demo.onrender.com/monitor/cliente](https://sistema-tickets-demo.onrender.com/monitor/cliente)
 
-## Contributing
+<p align="center">
+  <img src="./images/monitor-cliente.jpg" width="700" alt="Monitor de Cliente">
+</p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 🧾 Monitor de Cajero
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**URL:** [https://sistema-tickets-demo.onrender.com/monitor/cajero](https://sistema-tickets-demo.onrender.com/monitor/cajero)
 
-## Security Vulnerabilities
+<p align="center">
+  <img src="./images/monitor-cajero.jpg" width="700" alt="Monitor de Cajero">
+</p>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+
+### 💼 Panel del Cajero
+
+**URL:** [https://sistema-tickets-demo.onrender.com/panel/cajero](https://sistema-tickets-demo.onrender.com/panel/cajero)
+
+<p align="center">
+  <img src="./images/panel-cajero.jpg" width="700" alt="Panel del Cajero">
+</p>
+
+---
+
+### 🙋 Panel del Cliente
+
+**URL:** [https://sistema-tickets-demo.onrender.com/panel/cliente](https://sistema-tickets-demo.onrender.com/panel/cliente)
+
+<p align="center">
+  <img src="./images/panel-cliente.jpg" width="700" alt="Panel del Cliente">
+</p>
 
 ## License
 
